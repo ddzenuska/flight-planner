@@ -35,3 +35,17 @@ x
 Hsrc/main/java/io/codelex/flightplanner/configuration/SecurityConfig.java,4/3/43544a50be9e55398d7cf33b2724dc988e0e1661
 
 Osrc/test/java/io/codelex/flightplanner/FlightPlannerSpringApplicationTests.java,f/0/f0d0311c6eb03a12981174e74d660fe2288790b1
+x
+Hsrc/main/java/io/codelex/flightplanner/repository/AirportRepository.java,3/8/38331ec8894e87967dd549fb2b965d58c12e4632
+t
+Dsrc/main/java/io/codelex/flightplanner/components/FlightService.java,1/7/173985beef781d86f10d56be211ab0f1fc27c6fd
+v
+Fsrc/main/java/io/codelex/flightplanner/components/FlightComponent.java,2/0/2002e097a42700a66297b09569cf023995264bd5
+m
+=src/main/java/io/codelex/flightplanner/components/Flight.java,f/2/f2010e37e6a48be94ea918232080a40f73ac604f
+j
+:src/main/java/io/codelex/flightplanner/flights/Flight.java,f/8/f8e39e2d8951e174c67f8fb4e56c5d03904bc3e0
+q
+Asrc/main/java/io/codelex/flightplanner/flights/FlightService.java,2/8/28419320761b3a8e7101b43edfd1632869c7bcf0
+{
+Ksrc/main/java/io/codelex/flightplanner/testingApi/TestingApiController.java,8/e/8e1bc729f6ccbdf68c0968c5824d647ed5e3c256
