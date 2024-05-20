@@ -45,14 +45,14 @@ public class Airports {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Airports airports = (Airports) o;
-        return Objects.equals(normalize(this.country), normalize(airports.country)) &&
-                Objects.equals(normalize(this.city), normalize(airports.city)) &&
-                Objects.equals(normalize(this.airport), normalize(airports.airport));
+        return Objects.equals(normalize(country), normalize(airports.country)) &&
+                Objects.equals(normalize(city), normalize(airports.city)) &&
+                Objects.equals(normalize(airport), normalize(airports.airport));
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(country, city, airport);
+        return Objects.hash(normalize(country), normalize(city), normalize(airport));
     }
 
     private String normalize(String value) {

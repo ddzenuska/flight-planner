@@ -1,3 +1,5 @@
 
-…
-java:S2094"BRemove this empty class, write its code or make it an "interface".(¢ÊÙÓ8›ôÒÜ÷1J$5a07dee6-4bc7-473e-a74d-82e282d72274
+o
+java:S1128"-Remove this unused import 'org.slf4j.Logger'.(íØ®68™ê«ªù1J$20ea43eb-0fb1-4e31-b06d-da0bb2445233
+w
+java:S1128"4Remove this unused import 'org.slf4j.LoggerFactory'.(–ÿÚŞ8™ê«ªù1J$5d9f3686-c23a-45dd-b05f-14e3254cb8de

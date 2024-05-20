@@ -8,16 +8,16 @@ import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
 public class FlightRepository {
-    public final List<Flights> flightsList = new ArrayList<>();
+    public final List<Flight> flightsList = new ArrayList<>();
     protected final AtomicLong flightIdGenerator = new AtomicLong();
 
-    public Flights addFlight(Flights flight) {
+    public Flight addFlight(Flight flight) {
         flight.setId(flightIdGenerator.incrementAndGet());
         flightsList.add(flight);
         return flight;
     }
 
-    public Flights findFlightById(Long id) {
+    public Flight findFlightById(Long id) {
         return flightsList.stream()
                 .filter(flight -> flight.getId().equals(id))
                 .findFirst()
@@ -28,7 +28,11 @@ public class FlightRepository {
         flightsList.clear();
     }
 
-    public boolean flightExists(Flights flight) {
+    public boolean deleteFlight(Long id) {
+        return flightsList.removeIf(flight -> flight.getId().equals(id));
+    }
+
+    public boolean flightExists(Flight flight) {
         return flightsList.stream()
                 .anyMatch(f -> f.equals(flight));
     }
