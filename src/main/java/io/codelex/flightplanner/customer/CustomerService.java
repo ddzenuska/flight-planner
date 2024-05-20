@@ -4,9 +4,7 @@ import io.codelex.flightplanner.airports.AirportRepository;
 import io.codelex.flightplanner.airports.Airports;
 import io.codelex.flightplanner.flights.FlightRepository;
 import io.codelex.flightplanner.flights.Flight;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.codelex.flightplanner.flights.SearchFlightsRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,5 +26,23 @@ public class CustomerService {
 
     public List<Airports> searchAirport(String phrase) {
         return airportRepository.searchAirports(phrase);
+    }
+
+    public List<Flight> searchFlights(SearchFlightsRequest request) {
+        if (!isValid(request)) {
+            throw new IllegalArgumentException("Invalid search request data");
+        }
+
+        return flightRepository.searchFlights(request);
+    }
+
+    private boolean isValid(SearchFlightsRequest request) {
+        if (request.getFrom() == null || request.getTo() == null || request.getDepartureDate() == null) {
+            return false;
+        }
+        if (request.getFrom().equals(request.getTo())) {
+            return false;
+        }
+        return true;
     }
 }

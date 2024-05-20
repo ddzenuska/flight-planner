@@ -40,6 +40,10 @@ public class Airports {
         this.country = country;
     }
 
+    private String normalize(String value) {
+        return value == null ? null : value.trim().toLowerCase();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -53,9 +57,5 @@ public class Airports {
     @Override
     public int hashCode() {
         return Objects.hash(normalize(country), normalize(city), normalize(airport));
-    }
-
-    private String normalize(String value) {
-        return value == null ? null : value.trim().toLowerCase();
     }
 }

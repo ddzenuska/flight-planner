@@ -41,3 +41,13 @@ v
 Fsrc/main/java/io/codelex/flightplanner/airports/AirportRepository.java,9/1/91bf737721cb5093e4566766620a9c0e0a9b3250
 j
 :src/main/java/io/codelex/flightplanner/flights/Flight.java,f/8/f8e39e2d8951e174c67f8fb4e56c5d03904bc3e0
+w
+Gsrc/main/java/io/codelex/flightplanner/flights/SearchFlightRequest.java,7/3/73cd9dbf0dcbcf610e8c01325f4fdb1f4cf2fb50
+n
+>src/main/java/io/codelex/flightplanner/flights/PageResult.java,f/a/fae790ea32b09c59349240ba308ae30d902c2530
+x
+Hsrc/main/java/io/codelex/flightplanner/flights/SearchFlightsRequest.java,c/f/cfa8a9129388e702fdcca6bd668e21e9931a4c98
+a
+1src/main/java/io/codelex/flightplanner/pages.java,4/f/4f20ef2b249d6ec5ed3bd0a65704d84fa27fe449
+l
+<src/main/java/io/codelex/flightplanner/pages/PageResult.java,f/c/fcde0a3f0da95b9da996fd6385fd1adc3378e8c2
