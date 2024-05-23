@@ -9,5 +9,4 @@ class FlightPlannerSpringApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }

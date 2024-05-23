@@ -1,0 +1,11 @@
+
+…
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8¼ıó²ù1J$3cb02b6f-415d-4fec-bb2d-f7347c7c062d
+f
+java:S1128"Remove this duplicated import.(íŸ¤Šúÿÿÿÿ8Ò¥±ù1J$12754a77-2a52-46cb-9e4e-9be05840c584
+f
+java:S1128"Remove this duplicated import.(¶¯ø¦úÿÿÿÿ8Ò¥±ù1J$50fa9413-aa30-448f-a862-ebb24c8f827f
+‡
+java:S1128"DRemove this unused import 'org.springframework.web.bind.annotation'.(Ñ»ïÒ8Ò¥±ù1J$dc9431d4-64e7-4d8b-ae7c-f224c6731cb4
+f
+java:S1128"Remove this duplicated import.(Õë±Äøÿÿÿÿ8Ò¥±ù1J$6a631da0-7b62-42d7-ac4c-e5a44edaa00c
