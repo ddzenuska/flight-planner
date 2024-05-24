@@ -1,0 +1,13 @@
+.idea
+out/*
+build/*
+
+exportToHTML
+
+resources/*.bin
+resources/*.lock
+
+.gradle
+.DS_Store
+.sass-cache
+node_modules
