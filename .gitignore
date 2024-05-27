@@ -1,13 +1,16 @@
 .idea
-out/*
 build/*
-
-exportToHTML
+out/*
 
 resources/*.bin
 resources/*.lock
 
-.gradle
+exportToHTML
+
 .DS_Store
+
 .sass-cache
+
 node_modules
+
+.gradle
