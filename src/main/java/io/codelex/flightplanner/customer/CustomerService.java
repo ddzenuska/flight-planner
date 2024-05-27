@@ -1,13 +1,17 @@
 package io.codelex.flightplanner.customer;
 
-import io.codelex.flightplanner.airports.AirportRepository;
-import io.codelex.flightplanner.airports.Airports;
-import io.codelex.flightplanner.flights.FlightRepository;
-import io.codelex.flightplanner.flights.Flight;
-import io.codelex.flightplanner.flights.SearchFlightsRequest;
+import io.codelex.flightplanner.airport.AirportRepository;
+import io.codelex.flightplanner.airport.Airport;
+import io.codelex.flightplanner.exceptions.AddFlightException;
+import io.codelex.flightplanner.exceptions.FlightNotFoundException;
+import io.codelex.flightplanner.exceptions.UnsearchableFlightException;
+import io.codelex.flightplanner.flight.FlightRepository;
+import io.codelex.flightplanner.flight.Flight;
+import io.codelex.flightplanner.flight.SearchFlightRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class CustomerService {
@@ -24,25 +28,23 @@ public class CustomerService {
     }
 
 
-    public List<Airports> searchAirport(String phrase) {
-        return airportRepository.searchAirports(phrase);
+    public List<Airport> searchAirport(String search) {
+        return airportRepository.searchAirports(search);
     }
 
-    public List<Flight> searchFlights(SearchFlightsRequest request) {
-        if (!isValid(request)) {
-            throw new IllegalArgumentException("Invalid search request data");
-        }
-
-        return flightRepository.searchFlights(request);
+    public List<Flight> searchFlights(SearchFlightRequest request) {
+         if (!isValid(request)) {
+            throw new UnsearchableFlightException("Invalid search request data");
+        } else {
+             return flightRepository.searchFlights(request);
+         }
     }
 
-    private boolean isValid(SearchFlightsRequest request) {
+    private boolean isValid(SearchFlightRequest request) {
+        boolean isValid = true;
         if (request.getFrom() == null || request.getTo() == null || request.getDepartureDate() == null) {
-            return false;
+            isValid = false;
         }
-        if (request.getFrom().equals(request.getTo())) {
-            return false;
-        }
-        return true;
+        return isValid;
     }
 }

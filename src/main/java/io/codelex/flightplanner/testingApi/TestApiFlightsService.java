@@ -1,6 +1,6 @@
 package io.codelex.flightplanner.testingApi;
 
-import io.codelex.flightplanner.flights.FlightRepository;
+import io.codelex.flightplanner.flight.FlightRepository;
 import org.springframework.stereotype.Service;
 
 @Service

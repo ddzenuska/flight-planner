@@ -1,22 +1,16 @@
 package io.codelex.flightplanner.customer;
 
-import io.codelex.flightplanner.airports.Airports;
-import io.codelex.flightplanner.flights.Flight;
+import io.codelex.flightplanner.airport.Airport;
+import io.codelex.flightplanner.exceptions.AddFlightException;
+import io.codelex.flightplanner.exceptions.FlightNotFoundException;
+import io.codelex.flightplanner.flight.Flight;
 import io.codelex.flightplanner.pages.PageResult;
-import io.codelex.flightplanner.flights.SearchFlightsRequest;
+import io.codelex.flightplanner.flight.SearchFlightRequest;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api")
@@ -26,31 +20,31 @@ public class CustomerController {
     private CustomerService customerService;
 
     @GetMapping("/airports")
-    public ResponseEntity<List<Airports>> searchAirport(@RequestParam(required = false) String search) {
+    @ResponseStatus(HttpStatus.OK)
+    public List<Airport> searchAirport(@RequestParam(required = false) String search) {
         if (search == null || search.trim().isEmpty()) {
-            return ResponseEntity.badRequest().build();
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Search parameter is required");
         }
-        List<Airports> airports = customerService.searchAirport(search);
-        return ResponseEntity.ok(airports);
+        return customerService.searchAirport(search);
     }
 
     @GetMapping("/flights/{id}")
-    public ResponseEntity<Flight> findFlightById(@PathVariable long id) {
+    @ResponseStatus(HttpStatus.OK)
+    public Flight findFlightById(@PathVariable long id) {
         Flight flight = customerService.findFlightById(id);
         if (flight == null) {
-            return ResponseEntity.notFound().build();
+            throw new FlightNotFoundException("Cannot find flight");
         }
-        return ResponseEntity.ok(flight);
+        return flight;
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @PostMapping("/flights/search")
-    public ResponseEntity<PageResult<Flight>> searchFlights(@RequestBody SearchFlightsRequest request) {
-        try {
-            List<Flight> flights = customerService.searchFlights(request);
-            PageResult<Flight> result = new PageResult<>(0, flights.size(), flights);
-            return ResponseEntity.status(HttpStatus.OK).body(result);
-        } catch (IllegalArgumentException | HttpMessageNotReadableException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    public PageResult<Flight> searchFlights(@RequestBody SearchFlightRequest request) {
+        if (request.getFrom().equals(request.getTo())) {
+            throw new AddFlightException("");
+        } else {
+            return new PageResult<>(0, customerService.searchFlights(request).size(), customerService.searchFlights(request));
         }
     }
 }

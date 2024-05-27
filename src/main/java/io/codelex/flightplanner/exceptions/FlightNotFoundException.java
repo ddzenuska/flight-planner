@@ -1,7 +1,10 @@
 package io.codelex.flightplanner.exceptions;
 
-public class FlightNotFoundException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
+public class FlightNotFoundException extends ResponseStatusException {
     public FlightNotFoundException(String message) {
-        super(message);
+        super(HttpStatus.NOT_FOUND);
     }
 }

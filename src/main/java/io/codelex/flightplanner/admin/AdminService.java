@@ -1,10 +1,11 @@
 package io.codelex.flightplanner.admin;
 
-import io.codelex.flightplanner.airports.AirportRepository;
-import io.codelex.flightplanner.airports.Airports;
+import io.codelex.flightplanner.airport.AirportRepository;
+import io.codelex.flightplanner.airport.Airport;
+import io.codelex.flightplanner.exceptions.AddFlightException;
 import io.codelex.flightplanner.exceptions.DuplicateFlightException;
 import io.codelex.flightplanner.exceptions.FlightNotFoundException;
-import io.codelex.flightplanner.flights.*;
+import io.codelex.flightplanner.flight.*;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,8 +19,8 @@ public class AdminService {
     }
 
     public Flight addFlight(Flight request) {
-        if (!isValid(request)) {
-            throw new IllegalArgumentException("Invalid flight data");
+        if (!isFlightValid(request)) {
+            throw new AddFlightException("Invalid flight data");
         }
 
         Flight newFlight = new Flight(null, request.getFrom(), request.getTo(), request.getCarrier(),
@@ -47,27 +48,21 @@ public class AdminService {
         flightRepository.deleteFlight(id);
     }
 
-    private boolean isValid(Flight request) {
-        if (request.getFrom() == null || request.getTo() == null || request.getCarrier() == null ||
-                request.getDepartureTime() == null || request.getArrivalTime() == null) {
-            return false;
+    private boolean isFlightValid(Flight request) {
+        boolean isValid = true;
+        if (request.getFrom() == null || request.getTo() == null || request.getCarrier() == null) isValid = false;
+        else if (request.getDepartureTime() == null || request.getArrivalTime() == null ||
+                request.getDepartureTime().equals(request.getArrivalTime()) ||
+                request.getDepartureTime().isAfter(request.getArrivalTime())) {
+            isValid = false;
         }
-        if (isAirportInvalid(request.getFrom()) || isAirportInvalid(request.getTo())) {
-            return false;
-        }
-        if (request.getFrom().equals(request.getTo())) {
-            return false;
-        }
-        if (request.getCarrier().isEmpty()) {
-            return false;
-        }
-        if (request.getDepartureTime().isAfter(request.getArrivalTime()) || request.getDepartureTime().isEqual(request.getArrivalTime())) {
-            return false;
-        }
-        return true;
+        else if (isAirportInvalid(request.getFrom()) || isAirportInvalid(request.getTo())) isValid = false;
+        else if (request.getFrom().equals(request.getTo())) isValid = false;
+        else if (request.getCarrier().isEmpty()) isValid = false;
+        return isValid;
     }
 
-    private boolean isAirportInvalid(Airports airport) {
+    private boolean isAirportInvalid(Airport airport) {
         return airport.getCountry() == null || airport.getCity() == null || airport.getAirport() == null ||
                 airport.getCountry().trim().isEmpty() || airport.getCity().trim().isEmpty() || airport.getAirport().trim().isEmpty();
     }
