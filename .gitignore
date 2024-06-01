@@ -8,7 +8,7 @@ resources/*.bin
 resources/*.lock
 
 .sonarlint/
-.gradle/
+.gradle
 .DS_Store
 .sass-cache/
 node_modules/
