@@ -1,14 +1,14 @@
 package io.codelex.flightplanner.testingApi;
 
-import io.codelex.flightplanner.flight.FlightRepository;
+import io.codelex.flightplanner.flight.FlightInMemRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TestApiFlightsService {
 
-    private final FlightRepository flightRepository;
+    private final FlightInMemRepository flightRepository;
 
-    public TestApiFlightsService(FlightRepository flightRepository) {
+    public TestApiFlightsService(FlightInMemRepository flightRepository) {
         this.flightRepository = flightRepository;
     }
 

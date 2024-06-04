@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class AirportRepository {
+public class AirportInMemRepository {
     private final List<Airport> airportsList = new ArrayList<>();
 
     public void addAirport(Airport airport) {

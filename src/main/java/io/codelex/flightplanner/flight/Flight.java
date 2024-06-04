@@ -2,18 +2,30 @@ package io.codelex.flightplanner.flight;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.codelex.flightplanner.airport.Airport;
+import jakarta.persistence.*;
+import org.antlr.v4.runtime.misc.NotNull;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Entity
 public class Flight {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "from_airport_id")
     private Airport from;
+
+    @ManyToOne
+    @JoinColumn(name = "to_airport_id")
     private Airport to;
+
     private String carrier;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", shape = JsonFormat.Shape.STRING)
     private LocalDateTime departureTime;
-
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", shape = JsonFormat.Shape.STRING)
     private LocalDateTime arrivalTime;
 
