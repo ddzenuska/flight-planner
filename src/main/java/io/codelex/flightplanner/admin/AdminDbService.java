@@ -23,15 +23,15 @@ public class AdminDbService implements AdminService {
             throw new AddFlightException("Invalid flight data");
         }
 
-        Flight newFlight = new Flight(null, request.getFrom(), request.getTo(), request.getCarrier(),
-                request.getDepartureTime(), request.getArrivalTime());
+        Airport fromAirport = findOrCreateAirport(request.getFrom());
+        Airport toAirport = findOrCreateAirport(request.getTo());
 
-        if (flightDbRepository.existsByFromAndToAndDepartureTime(newFlight.getFrom(), newFlight.getTo(), newFlight.getDepartureTime())) {
+        if (flightDbRepository.existsByFromAndToAndDepartureTimeAndIdNot(fromAirport, toAirport, request.getDepartureTime(), request.getId())) {
             throw new DuplicateFlightException("Flight already exists");
         }
 
-        airportDbRepository.save(request.getFrom());
-        airportDbRepository.save(request.getTo());
+        Flight newFlight = new Flight(null, fromAirport, toAirport, request.getCarrier(),
+                request.getDepartureTime(), request.getArrivalTime());
 
         return flightDbRepository.save(newFlight);
     }
@@ -62,5 +62,14 @@ public class AdminDbService implements AdminService {
     private boolean isAirportInvalid(Airport airport) {
         return airport.getCountry() == null || airport.getCity() == null || airport.getAirport() == null ||
                 airport.getCountry().trim().isEmpty() || airport.getCity().trim().isEmpty() || airport.getAirport().trim().isEmpty();
+    }
+
+    private Airport findOrCreateAirport(Airport request) {
+        return airportDbRepository.findByAirportContainingIgnoreCaseOrCityContainingIgnoreCaseOrCountryContainingIgnoreCase(
+                        request.getAirport(), request.getCity(), request.getCountry())
+                .stream()
+                .filter(airport -> airport.equals(request))
+                .findFirst()
+                .orElseGet(() -> airportDbRepository.save(request));
     }
 }

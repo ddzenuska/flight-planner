@@ -19,15 +19,17 @@ public class CustomerInMemService implements CustomerService {
         this.airportRepository = airportRepository;
     }
 
+    @Override
     public Flight findFlightById(Long id) {
         return flightRepository.findFlightById(id);
     }
 
-
+    @Override
     public List<Airport> searchAirport(String search) {
         return airportRepository.searchAirports(search);
     }
 
+    @Override
     public List<Flight> searchFlights(SearchFlightRequest request) {
          if (!isValid(request)) {
             throw new UnsearchableFlightException("Invalid search request data");

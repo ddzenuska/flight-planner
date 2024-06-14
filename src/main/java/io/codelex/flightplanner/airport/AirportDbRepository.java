@@ -8,8 +8,5 @@ import java.util.List;
 
 @Repository
 public interface AirportDbRepository extends JpaRepository<Airport, Long> {
-    @Query("SELECT a FROM Airport a WHERE LOWER(a.airport) LIKE LOWER('%' || :search || '%') " +
-            "OR LOWER(a.city) LIKE LOWER('%' || :search || '%') " +
-            "OR LOWER(a.country) LIKE LOWER('%' || :search || '%')")
-    List<Airport> searchAirports(@Param("search") String search);
+    List<Airport> findByAirportContainingIgnoreCaseOrCityContainingIgnoreCaseOrCountryContainingIgnoreCase(String airport, String city, String country);
 }

@@ -29,7 +29,13 @@ public class CustomerDbService implements CustomerService {
 
     @Override
     public List<Airport> searchAirport(String search) {
-        return airportRepository.searchAirports(search);
+        String normalizedSearch = search.trim().toLowerCase();
+        List<Airport> results = airportRepository.findByAirportContainingIgnoreCaseOrCityContainingIgnoreCaseOrCountryContainingIgnoreCase(
+                normalizedSearch, normalizedSearch, normalizedSearch);
+        results.forEach(airport -> {
+            System.out.println("Found airport: " + airport.getAirport());
+        });
+        return results;
     }
 
     @Override

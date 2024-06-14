@@ -17,6 +17,7 @@ public class AdminInMemService implements AdminService {
         this.airportRepository = airportRepository;
     }
 
+    @Override
     public Flight addFlight(Flight request) {
         if (!isFlightValid(request)) {
             throw new AddFlightException("Invalid flight data");
@@ -35,6 +36,7 @@ public class AdminInMemService implements AdminService {
         return flightRepository.addFlight(newFlight);
     }
 
+    @Override
     public Flight fetchFlight(long id) {
         Flight flight = flightRepository.findFlightById(id);
         if (flight == null) {
@@ -43,6 +45,7 @@ public class AdminInMemService implements AdminService {
         return flight;
     }
 
+    @Override
     public void deleteFlight(long id) {
         flightRepository.deleteFlight(id);
     }

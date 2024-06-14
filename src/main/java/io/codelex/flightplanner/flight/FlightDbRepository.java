@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface FlightDbRepository extends JpaRepository<Flight, Long> {
-    boolean existsByFromAndToAndDepartureTime(Airport from, Airport to, LocalDateTime departureTime);
+    boolean existsByFromAndToAndDepartureTimeAndIdNot(Airport from, Airport to, LocalDateTime departureTime, Long id);
 
     List<Flight> findByFromAirportAndToAirportAndDepartureTimeBetween(String from, String to, LocalDateTime start, LocalDateTime end);
 }
