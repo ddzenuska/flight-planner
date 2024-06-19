@@ -7,6 +7,9 @@ import io.codelex.flightplanner.exceptions.DuplicateFlightException;
 import io.codelex.flightplanner.exceptions.FlightNotFoundException;
 import io.codelex.flightplanner.flight.Flight;
 import io.codelex.flightplanner.flight.FlightDbRepository;
+import jakarta.transaction.Transactional;
+
+import java.util.List;
 
 public class AdminDbService implements AdminService {
     private final FlightDbRepository flightDbRepository;
@@ -23,16 +26,20 @@ public class AdminDbService implements AdminService {
             throw new AddFlightException("Invalid flight data");
         }
 
+        System.out.println("Adding flight: " + request);
+
         Airport fromAirport = findOrCreateAirport(request.getFrom());
         Airport toAirport = findOrCreateAirport(request.getTo());
-
-        if (flightDbRepository.existsByFromAndToAndDepartureTimeAndIdNot(fromAirport, toAirport, request.getDepartureTime(), request.getId())) {
-            throw new DuplicateFlightException("Flight already exists");
-        }
 
         Flight newFlight = new Flight(null, fromAirport, toAirport, request.getCarrier(),
                 request.getDepartureTime(), request.getArrivalTime());
 
+        if (flightDbRepository.existsByFromAndToAndDepartureTimeAndArrivalTimeAndIdNot(fromAirport, toAirport, request.getDepartureTime(), request.getArrivalTime(), request.getId())) {
+            System.out.println("Duplicate found!");
+            throw new DuplicateFlightException("Flight already exists");
+        }
+
+        System.out.println("Saving new flight: " + newFlight);
         return flightDbRepository.save(newFlight);
     }
 
@@ -65,11 +72,22 @@ public class AdminDbService implements AdminService {
     }
 
     private Airport findOrCreateAirport(Airport request) {
-        return airportDbRepository.findByAirportContainingIgnoreCaseOrCityContainingIgnoreCaseOrCountryContainingIgnoreCase(
-                        request.getAirport(), request.getCity(), request.getCountry())
-                .stream()
-                .filter(airport -> airport.equals(request))
+        System.out.println("Searching for airport: " + request);
+
+        List<Airport> foundAirports = airportDbRepository.findByAirportContainingIgnoreCaseOrCityContainingIgnoreCaseOrCountryContainingIgnoreCase(
+                request.getAirport(), request.getCity(), request.getCountry());
+
+        System.out.println("Found airports: " + foundAirports);
+
+        Airport airport = foundAirports.stream()
+                .filter(a -> a.equals(request))
                 .findFirst()
-                .orElseGet(() -> airportDbRepository.save(request));
+                .orElseGet(() -> {
+                    System.out.println("Creating new airport: " + request);
+                    return airportDbRepository.save(request);
+                });
+
+        System.out.println("Returning airport: " + airport);
+        return airport;
     }
 }
