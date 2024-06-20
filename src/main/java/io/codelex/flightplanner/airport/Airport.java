@@ -1,10 +1,27 @@
 package io.codelex.flightplanner.airport;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import org.antlr.v4.runtime.misc.NotNull;
+
 import java.util.Objects;
 
+@Entity
 public class Airport {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotNull
     private String country;
+
+    @NotNull
     private String city;
+
+    @NotNull
     private String airport;
 
     public Airport() {
