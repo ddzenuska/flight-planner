@@ -1,4 +1,4 @@
-package io.codelex.flightplanner.customer;
+package io.codelex.flightplanner.controller;
 
 import io.codelex.flightplanner.airport.Airport;
 import io.codelex.flightplanner.exceptions.AddFlightException;
@@ -6,6 +6,7 @@ import io.codelex.flightplanner.exceptions.FlightNotFoundException;
 import io.codelex.flightplanner.flight.Flight;
 import io.codelex.flightplanner.pages.PageResult;
 import io.codelex.flightplanner.flight.SearchFlightRequest;
+import io.codelex.flightplanner.service.ServiceInterface;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -17,7 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class CustomerController {
 
     @Autowired
-    private CustomerService customerService;
+    private ServiceInterface serviceClass;
 
     @GetMapping("/airports")
     @ResponseStatus(HttpStatus.OK)
@@ -25,13 +26,13 @@ public class CustomerController {
         if (search == null || search.trim().isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Search parameter is required");
         }
-        return customerService.searchAirport(search);
+        return serviceClass.searchAirport(search);
     }
 
     @GetMapping("/flights/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Flight findFlightById(@PathVariable long id) {
-        Flight flight = customerService.findFlightById(id);
+        Flight flight = serviceClass.findFlightById(id);
         if (flight == null) {
             throw new FlightNotFoundException("Cannot find flight");
         }
@@ -44,7 +45,7 @@ public class CustomerController {
         if (request.getFrom().equals(request.getTo())) {
             throw new AddFlightException("");
         } else {
-            return new PageResult<>(0, customerService.searchFlights(request).size(), customerService.searchFlights(request));
+            return new PageResult<>(0, serviceClass.searchFlights(request).size(), serviceClass.searchFlights(request));
         }
     }
 }

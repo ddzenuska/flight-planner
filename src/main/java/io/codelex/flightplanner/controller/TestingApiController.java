@@ -1,5 +1,6 @@
-package io.codelex.flightplanner.testingApi;
+package io.codelex.flightplanner.controller;
 
+import io.codelex.flightplanner.service.ServiceInterface;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,15 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/testing-api")
 public class TestingApiController {
 
-    private final TestApiFlightsService flightService;
+    private final ServiceInterface serviceClass;
 
-    public TestingApiController(TestApiFlightsService flightService) {
-        this.flightService = flightService;
+    public TestingApiController(ServiceInterface serviceClass) {
+        this.serviceClass = serviceClass;
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/clear")
     public void clearFlights() {
-        flightService.clearFlights();
+        serviceClass.clearFlights();
     }
 }
