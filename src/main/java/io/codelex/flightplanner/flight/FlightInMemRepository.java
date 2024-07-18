@@ -9,7 +9,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
-public class FlightRepository {
+public class FlightInMemRepository {
 
     private final List<Flight> flightsList = new ArrayList<>();
     private final Lock lock = new ReentrantLock();
